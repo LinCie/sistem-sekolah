@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
     "dotenv": "^16.4.5",
     "drizzle-orm": "^0.36.3",
     "elysia": "^1.1.25",
