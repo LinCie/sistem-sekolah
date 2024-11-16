@@ -1,13 +1,6 @@
-// app/api/[[...slugs]]/route.ts
-import { Elysia, t } from "elysia";
+import { elysia } from "@/elysia";
 
-const app = new Elysia({ prefix: "/api" })
-  .get("/", () => "hello Next")
-  .post("/", ({ body }) => body, {
-    body: t.Object({
-      name: t.String(),
-    }),
-  });
-
-export const GET = app.handle;
-export const POST = app.handle;
+export const GET = elysia.handle;
+export const POST = elysia.handle;
+export const PATCH = elysia.handle;
+export const DELETE = elysia.handle;
