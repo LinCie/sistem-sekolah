@@ -1,4 +1,10 @@
-import { integer, pgTable, varchar, timestamp } from "drizzle-orm/pg-core";
+import {
+  integer,
+  pgTable,
+  varchar,
+  timestamp,
+  text,
+} from "drizzle-orm/pg-core";
 
 import type { InferSelectModel } from "drizzle-orm";
 import { relations } from "drizzle-orm";
@@ -14,10 +20,15 @@ export const usersRelations = relations(usersTable, ({ many }) => ({
   session: many(sessionsTable),
 }));
 
-export const sessionsTable = pgTable("sessions", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  user: integer("user_id").references(() => usersTable.id),
-  expiresAt: timestamp("expires_at").notNull(),
+export const sessionsTable = pgTable("session", {
+  id: text("id").primaryKey(),
+  user: integer("user_id")
+    .notNull()
+    .references(() => usersTable.id),
+  expiresAt: timestamp("expires_at", {
+    withTimezone: true,
+    mode: "date",
+  }).notNull(),
 });
 
 export const sessionsRelations = relations(sessionsTable, ({ one }) => ({
