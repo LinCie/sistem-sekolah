@@ -1,4 +1,4 @@
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from 'drizzle-orm/node-postgres';
 
 const db = drizzle(Bun.env.DATABASE_URL!);
 
