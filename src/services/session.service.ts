@@ -1,4 +1,3 @@
-import { eq } from "drizzle-orm";
 import {
   type User,
   type Session,
@@ -6,6 +5,7 @@ import {
   usersTable,
 } from "@/db/schema";
 import { db } from "@/db";
+import { eq } from "drizzle-orm";
 
 import {
   encodeBase32LowerCaseNoPadding,
@@ -21,12 +21,12 @@ export function generateSessionToken(): string {
 
 export async function createSession(
   token: string,
-  userId: number
+  user: number
 ): Promise<Session> {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)));
   const session: Session = {
     id: sessionId,
-    userId,
+    user,
     expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
   };
   await db.insert(sessionsTable).values(session);
@@ -40,7 +40,7 @@ export async function validateSessionToken(
   const result = await db
     .select({ user: usersTable, session: sessionsTable })
     .from(sessionsTable)
-    .innerJoin(usersTable, eq(sessionsTable.userId, usersTable.id))
+    .innerJoin(usersTable, eq(sessionsTable.user, usersTable.id))
     .where(eq(sessionsTable.id, sessionId));
 
   if (result.length < 1) {
