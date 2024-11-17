@@ -14,6 +14,7 @@ export const usersTable = pgTable("users", {
   username: varchar({ length: 255 }).notNull().unique(),
   name: varchar({ length: 255 }).notNull(),
   hash: varchar({ length: 255 }).notNull(),
+  roles: text("roles").array().notNull().default(["user"]),
 });
 
 export const usersRelations = relations(usersTable, ({ many }) => ({
