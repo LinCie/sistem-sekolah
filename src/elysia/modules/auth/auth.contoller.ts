@@ -1,13 +1,13 @@
 import { Elysia, t } from "elysia";
 import { AuthService } from "./auth.service";
-import { UserService } from "../users/users.service";
+import { UsersService } from "../users/users.service";
 import { createUserDto } from "../users/users.dto";
 
 const auth = new Elysia({ prefix: "/auth" })
   .post(
     "/signup",
     async ({ cookie: { session }, body }) => {
-      const user = await UserService.createUser(body);
+      const user = await UsersService.createUser(body);
       const { token } = await AuthService.generateSession(user.id);
       session.set({
         value: token,
@@ -31,7 +31,7 @@ const auth = new Elysia({ prefix: "/auth" })
 
       const { isValid, user } = validated;
       if (!isValid) return null;
-      
+
       const { token } = await AuthService.generateSession(user.id);
       session.set({
         value: token,

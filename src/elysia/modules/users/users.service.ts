@@ -3,7 +3,7 @@ import { User, usersTable } from "@/db/schema";
 import { eq } from "drizzle-orm";
 import { CreateUserDto, UpdateUserDto } from "./users.dto";
 
-class UserService {
+class UsersService {
   static async getUsers(): Promise<User[]> {
     return await db.select().from(usersTable);
   }
@@ -36,10 +36,10 @@ class UserService {
     id: number,
     data: UpdateUserDto
   ): Promise<User | null> {
-    const user = await UserService.getUser(id);
+    const user = await UsersService.getUser(id);
     if (!user) return null;
     await db.update(usersTable).set(data).where(eq(usersTable.id, id));
-    return await UserService.getUser(id);
+    return await UsersService.getUser(id);
   }
 
   static async deleteUser(id: number): Promise<void> {
@@ -47,4 +47,4 @@ class UserService {
   }
 }
 
-export { UserService };
+export { UsersService };

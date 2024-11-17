@@ -1,20 +1,20 @@
 import { Elysia } from "elysia";
-import { UserService } from "./users.service";
+import { UsersService } from "./users.service";
 import { createUserDto, updateUserDto } from "./users.dto";
 
 const users = new Elysia({ prefix: "/users" })
   .get("/", async () => {
-    const users = await UserService.getUsers();
+    const users = await UsersService.getUsers();
     return users;
   })
   .get("/:id", async ({ params }) => {
-    const user = await UserService.getUser(parseInt(params.id));
+    const user = await UsersService.getUser(parseInt(params.id));
     return user;
   })
   .post(
     "/",
     async ({ body }) => {
-      const user = await UserService.createUser(body);
+      const user = await UsersService.createUser(body);
       return user;
     },
     {
@@ -24,7 +24,7 @@ const users = new Elysia({ prefix: "/users" })
   .patch(
     "/:id",
     async ({ params, body }) => {
-      const user = await UserService.updateUser(parseInt(params.id), body);
+      const user = await UsersService.updateUser(parseInt(params.id), body);
       return user;
     },
     {
@@ -32,7 +32,7 @@ const users = new Elysia({ prefix: "/users" })
     }
   )
   .delete("/:id", async ({ params }) => {
-    await UserService.deleteUser(parseInt(params.id));
+    await UsersService.deleteUser(parseInt(params.id));
     return { message: "User deleted successfully" };
   });
 
