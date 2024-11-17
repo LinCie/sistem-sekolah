@@ -1,11 +1,9 @@
-import { Elysia, t } from "elysia";
+import { Elysia } from "elysia";
+import { auth } from "./modules/auth/auth.contoller";
 
 const elysia = new Elysia({ prefix: "/api" })
+  .use(auth)
   .get("/", () => "hello Next")
-  .post("/", ({ body }) => body, {
-    body: t.Object({
-      name: t.String(),
-    }),
-  });
+
 
 export { elysia };
