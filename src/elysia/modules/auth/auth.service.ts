@@ -5,7 +5,7 @@ import { Session, User, usersTable } from "@/db/schema";
 import {
   createSession,
   generateSessionToken,
-} from "@/services/session.service";
+} from "@/elysia/utilities/session";
 
 abstract class AuthService {
   static async generateSession(
